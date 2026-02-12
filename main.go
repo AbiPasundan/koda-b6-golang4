@@ -7,11 +7,18 @@ import (
 )
 
 func main() {
-	defer fmt.Println("0. Exit")
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println(r)
+		}
+	}()
 
 	var number int
 	fmt.Println("\nmasukan dulu angka")
-	fmt.Scanln(&number)
+	_, err := fmt.Scanln(&number)
+	if err != nil {
+		panic(err)
+	}
 
 	fmt.Println("Pilih Konversi")
 	ShowMenu()
@@ -23,7 +30,6 @@ func main() {
 		switch input {
 		case 1:
 			// ( °C × 9/5) + 32 = 32 °F
-			// 900°C * (9/5) + 32 = 1652°F
 			result := number*(9/5) + 32
 			fmt.Print("\nHasilnya ", result)
 			fmt.Printf("\n\nJika ingin konversi lagi silahkan pilih jika tidak masukan angka 0 \n")
@@ -41,9 +47,9 @@ func main() {
 			fmt.Printf("\n\nJika ingin konversi lagi silahkan pilih jika tidak masukan angka 0 \n")
 			main()
 		case 0:
+			fmt.Println("Bay bay samapai jumpah")
 			os.Exit(0)
 		default:
-			// os.Exit(0)
 			fmt.Println("Pilihan tidak ada pilih yang benar")
 		}
 	}

@@ -3,6 +3,7 @@ package lib
 import "fmt"
 
 func ShowMenu() []string {
+	defer fmt.Println("0. Exit")
 	conv := []string{
 		"Fahrenheit",
 		"Reamure",
